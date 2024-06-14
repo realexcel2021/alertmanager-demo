@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rules
+data:
+  config/rules.yml
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus
+data:
+  config/prometheus.yml
+
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager
+data:
+  config/alertmanager.yml
