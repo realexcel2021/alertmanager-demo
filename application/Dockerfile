@@ -1,10 +1,26 @@
-FROM golang:1.15 AS builder
-WORKDIR /app
-COPY . .
-RUN go mod download
-RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o /go/app main.go
+# Stage 1: Build stage
+FROM golang:1.20-alpine AS build
 
-FROM scratch
-COPY --from=builder /go/app /go/app
+# Set the working directory
+WORKDIR /app
+
+# Copy the source code
+COPY . .
+
+# Build the Go application
+RUN go build -o main .
+
+# Stage 2: Final stage
+FROM alpine:edge
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the binary from the build stage
+COPY --from=build /app .
+
+# Expose port 8080
 EXPOSE 8080
-CMD ["/go/app"]
+
+# Binary will be executed when the container starts
+CMD ["./main"]

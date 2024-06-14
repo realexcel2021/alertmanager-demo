@@ -32,4 +32,4 @@ scrape_configs:
   - job_name: 'Hello-app'
 
     static_configs:
-    - targets: ['Hello Service']
+    - targets: ['my-app:8080/target']
